@@ -1,0 +1,15 @@
+# Site settings
+title: jmax Blog
+header-img: img/home-bg.jpg
+email: maxwell_hu@163.com
+description: "welcome"
+baseurl: ""
+url: ""
+github_username:  jmaxhu
+
+# Build settings
+markdown: kramdown
+highlighter: pygments
+permalink: pretty
+paginate: 6
+exclude: ["less","node_modules","Gruntfile.js","package.json","README.md"]
