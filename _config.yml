@@ -11,5 +11,6 @@ github_username:  jmaxhu
 markdown: kramdown
 highlighter: pygments
 permalink: pretty
+gems: [jekyll-paginate]
 paginate: 6
 exclude: ["less","node_modules","Gruntfile.js","package.json","README.md"]
