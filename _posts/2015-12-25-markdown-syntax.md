@@ -1,0 +1,369 @@
+#Markdown: 语法
+
+* [概述](#overview)
+  * [哲学](#philosophy)
+  * [行内 HTML](#html)
+  * [特殊字符自动置换](#autoescape)
+* [块元素](#block)
+  * [段落和换行](#p)
+  * [标题](#header)
+  * [块引用](#blockquote)
+  * [列表](#list)
+  * [程序块](#precode)
+  * [分隔线](#hr)
+* [区段元素](#span)
+  * [链接](#link)
+  * [强调](#em)
+  * [程序](#code)
+  * [图片](#img)
+* [其它](#misc)
+  * [转义字符](#backslash)
+  * [自动链接](#autolink)
+* [感谢](#acknowledgement)
+
+* * *
+
+<h2 id="overview">概述</h2>
+
+<h3 id="philosophy">哲学</h3>
+
+Markdown 的目标是实现易读最写。
+
+不过最需要强调的是它的可读性。一份使用Markdown格式写的文件应该可以直接以纯文本发布，并且看盐业不会像是由许多标签或格式指令所构成。Markdown语法受到一些既有text-to-HTML格式的影响，包含[Setext][1]、[atx][2]、[Textile][3]、[reStructuredText][4]、[Grutatext][5]和[EtText][6]，然而最大的灵感来源其实是纯文本的电子邮件格式。
+
+  [1]: http://docutils.sourceforge.net/mirror/setext.html
+  [2]: http://www.aaronsw.com/2002/atx/
+  [3]: http://textism.com/tools/textile/
+  [4]: http://docutils.sourceforge.net/rst.html
+  [5]: http://www.triptico.com/software/grutatxt.html
+  [6]: http://ettext.taint.org/doc/
+
+因此 Markdown 的语法由标点符号所组合，并经过谨慎选择，是为了让它们看来就像所要表达的意思。像是在文字两旁加上星号，看起来像是\*强调\*。Markdown的列表看起来，嗯，就是列表。假如你有使用过电子邮件，块引用看起来就真的像是引用一段文字。
+
+<h3 id="html">行内HTML</h3>
+
+Markdown的语法有个主要的目的：用来作为一种网络内容的*写作*语言。
+
+Markdown不是要来取代HTML， 甚至也没有要和它相似，它的语法种类不多，只和HTML的一部分有关系，重点*不是*要创建一种更容易写HTML文件的语法，我认为HTML已经很容易了，Markdown的重点在于，它能让文件更容易阅读、编写。HTML是一种*发布*格式，Markdown是一种*编写*格式，因此，Markdown的格式语法只涵盖纯文本可以涵盖的范围。
+
+不在Markdown涵盖范围之外的标签，都可以直接在文件里用HTML撰写。不需要额外标注这是HTML或是Markdown；只要直接加标签就可以了。
+
+只有块元素比如`<div>`,`<table>`,`<pre>`,`<p>`等标签，必须在前后加上空行，以利于内容分隔。而且这些（元素）的开始与结尾标签，不可以用tab或都空白来缩排。Markdown的产生器有智能判断，可以避免在块标签前后加上没有必要的`<p>`标签。
+
+举例来说，在Markdown文件里加上一段HTML表格：
+
+  This is a regular paragraph.
+
+  <table>
+    <tr>
+      <td>Foo</td>
+    </tr>
+  </table>
+
+  This is another regular paragraph.
+
+请注意，Markdown语法在HTML块标签中将不会被处理。例如，你无法在HTML块中使用Markdown形式的`*强调*`。
+
+HTML的区段标签如`<span>`,`<cite>`,`<del>`则不受限制，可以在Markdown的段落、列表或标题里任意使用。按使用人的习惯，甚至可以不用Markdown格式，而采用HTML标签来格式化。举例说明：如果比较喜欢HTML的`<a>`或`<img>`标签，可以直接使用这些标签，而不用Markdown提供的链接或图片语法。
+
+HTML区段标签或块标签不同，在区段标签的范围内，Markdown的语法是有效的。
+
+<h3 id="autoescape">特殊字符自动转换</h3>
+
+在HTML文件中，有两个字符需要特殊处理：`<`和`&`。`<`符号用于起始标签，`&`符号则用于标记HTML实体，如果你只是想要使用这些符号，你必须要使用实体的形式，像是`&lt;`和`&amp;`。
+
+`&`符号其实很容易让写网络文件的人感到困扰，如果你要打「AT&T」，你必须要写成「AT&amp;T」，还得转换网址内的`&`符号，如果你要链接到：
+
+  http://images.google.com/images?num=30&q=larry+bird
+
+你必须要把网址转成：
+
+  http://images.google.com/iamges?num=30&amp;q=larry+bird
+
+才能放到链接标签的`href`属性里。不用说也知道这很容易忘记，这也可能是HTML标准检查所查到错误中，数量最多的。
+
+Markdown允许你直接使用这些符号，但是你要小心转义字符的使用，如果你是在HTML实体中使用`&`符号的话，它不会被转换，而在其它情况下，它则会被转换成`&amp;`。所以你如果要在文件中插入一个著作权的符号，你可以这样写：
+
+  &copy;
+
+Markdown将不会对这段文字做修改，但是如果你这样写：
+
+  AT&T
+
+Markdown就会将它转为：
+
+  AT&amp;T
+
+类似的情况也会发生在`<`符号上，因为Markdown支持[行内HTML](#html)，如果你是使用`<`符号作为HTML标签使用，那Markdown也不会对它做任何转换，但是如果你是写：
+
+  4 < 5
+
+Markdown将会把它转换为：
+
+  4 &lt; 5
+
+不过需要注意的是，code范围内，不论是行内还是块，`<`和`&`两个符号者*一定*会被转换成HTML实体，这项特性让你可以很容易地用Markdown写HTML code（和HTML相对而言，HTML语法中，你要把所有的`<`和`&`都转换为HTML实体，才能在HTML文件里写出HTML code。）
+
+* * *
+
+<h2 id="block">块元素</h2>
+
+<h3 id="p">段落和换行</h3>
+
+一个段落是由一个以上相连接的语句组合，而一个以上的空行则会切分出不同的段落（空行的定义是显示上看起来像是空行，便会被视为空行。比方说，若某一行只包含空白和tab，则该行也会被视为空行），一般的段落不需要用空白或断行缩排。
+
+「一个以上相连接的语句组合」这名话其它暗示了Markdown允许段落内的强迫断行，这个特性和其它大部发的text-to-HTML格式不一样（包含MovableType）和「Convert Line Breaks」选择），其它的格式会把每个断行都转成`<br />`标签。
+
+如果你*直的*想要插入`<br />`标签的话，在行尾加上两个以上的空白，然后按enter。
+
+是的，这确实需要花比较多的功夫来插入`<br />`，但是「每个换行都转换为`<br />`的方法在Markdown中并不适合，Markdown中email式的「块引用][bq]和多段落的[列表][l]在使用换行来排版的时候，不但更好用，还更好阅读。
+
+  [bq]: #blockquote
+  [l]:  #list
+
+<h3 id="header">标题</h3>
+
+Markdown支持两种标题的语法，[Setext][1]和[atx][2]形式。
+
+Setext形式是用底线的形式，利用`=`（最高阶标题）和`-`（第二阶标题），例如：
+
+  This is an H1
+  =============
+
+  This is an H3
+  -------------
+
+任何数量的`=`和`-`都可以有效果。 
+
+Atx形式则在行首插入1到6个`#`，对应到标题1到6阶，使用：
+
+  # This is an H1
+
+  ## This is an H2
+
+  ###### This is an H6
+
+你可以选择性的「关闭」atx样式的标题，这纯粹只是美观用的，若是觉得这样看起来比较舒适，你就可以在行尾加上`#`，而在行尾的`#`数量也不用和开头一样（行首的井字数量决定标题的阶数）：
+
+  # This is an H1 #
+
+  ## This is an H2 ##
+
+  ### This is an H3 ######
+
+<h3 id="blockquote">块引用</h3>
+
+Markdown使用email形式的块引用，如果你很熟悉如何在email信件中引用，你就知道怎么在Markdown文件中建立一个块引用，那会看起来像是你强迫断行，然后在每行的最前面加上`>`：
+
+  > This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,
+  > consectetuer adipiscing elit. Aliquam hendrerit mi posuere Lectus.
+  > Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.
+  >
+  > Dones sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse
+  > is sem consectetuer libero luctus adipiscing.
+
+Markdown也允许你只在整个段落的第一行前面加上`>`：
+
+  > This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,
+  consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.
+  Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.
+
+  > Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse
+  id sem consectetuer libero luctus adipiscing.
+
+块引用可以有阶层（例如：引用内的引用），只要根据层数加上不同数量的`>`：
+
+  > This is the first level of quoting.
+  >
+  >> This is nested blockquote.
+  >
+  > Back to the first level.
+
+引用的块内也可以使用其他的Markdown语法，包括标题、列表、程序块等：
+
+  > ## This is a header.
+  >
+  > 1.  This is the first list item.
+  > 2.  This is the second list item.
+  >
+  > Here's some example code:
+  >
+  >   return shell_exec("echo $input | $markdown_script");
+
+任何标准的文字编辑器都能简单地建立email格式的引用， 例如BBEdit，你可以选取文字然后选择*增加引用阶层*。
+
+<h3 id="list">列表</h3>
+
+Markdown支持有序列表和无序列表。
+
+无序列表使用星号、加号或是减号作为列表标记。
+
+    *   Red
+    *   Green
+    *   Blue
+
+等同于：
+
+    +   Red
+    +   Green
+    +   Blue
+
+也等同于：
+
+    -   Red
+    -   Green
+    -   Blue
+
+有序列表则使用数字接着一个英文句点：
+
+    1.  Bird
+    2.  McHale
+    3.  Parish
+
+很重要的一点是，你在列表标记上五个人的数字并不会影响输出的HTML结果，上面的列表所产生的HTML标记为：
+
+    <ol>
+    <li>Bird</li>
+    <li>McHale</li>
+    <li>Parish</li>
+    </ol>
+
+如果你的列表标识写成：
+
+    1.  Bird
+    1.  McHale
+    1.  Parish        
+
+或甚至是：
+
+    3. Bird
+    1. McHale
+    8. Parish
+
+你都会得到完全相同的HTML输出。重点在于，你可以让Markdown文件的列表数字和输出的结果相同。或是你懒一点，你可以完全不用在意数字的正确性。
+
+如果你使用懒惰的写法，建议第一个项目最好还是从1.开始，因为Markdown未来可以会支持有序列表的start属性。
+
+  列表项目标记通常是放在最左边，但是其实也可缩排，最多三个空白，项目标记后面则一定要接着至少一个空白或tab。
+
+    *   Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+        Aliquam hendrerit mi posuere lectus. Vestibulum enim wisi,
+        viverra nec, fringilla in, laoreet vitae, risus.
+    *   Donec sit amet nisl. Aliquam semper ipsum sit amet velit.
+        Suspendisse id sem consectetuer libero luctus adipiscing.  
+
+但是如果你很懒，那也不一定需要：
+
+    *   Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+    Aliquam hendrerit mi posuere lectus. Vestibulum enim wisi,
+    viverra nec, fringilla in, laoreet vitae, risus.
+    *   Donec sit amet nisl. Aliquam semper ipsum sit amet velit.
+    Suspendisse id sem consectetuer libero luctus adipiscing.
+
+如果列表项目间用空行分开，Markdown会把项目的内容在输出时用`<p>`标签包起来，举例来说：
+
+    *   Bird
+    *   Magic
+
+会被转换为：
+
+    <ul>
+    <li>Bird</li>
+    <li>Magic</li>
+    </ul>
+
+但是这个：
+
+    *   Bird
+
+    *   Magic
+
+会被转换为：
+
+    <ul>
+    <li><p>Bird</p></li>
+    <li><p>Magic</p></li>
+    </ul>
+
+列表项目可以包含多个段落，每个项目下的段落都必须缩排4个空白或一个tab：
+
+    1.  This is a list item with two paragraphs. Lorem ipsum dolor
+        sit amet, consectetuer adipiscing elit. Aliquam hendrerit
+        mi posuere lectus.
+
+        Vestibulum enim wisi, viverra nec, fringilla in, laoreet
+        vitae, risus. Donec sit amet nisl. Aliquam semper ipsum
+        sit amet velit.
+
+    2.  Suspendisse id sem consectetuer libero luctus adipiscing.
+
+如果你每行都有缩排，看起来会好看很多，当然，再次地，如果你很懒惰，Markdown也允许：
+
+    *   This is a list item with two paragraphs.
+
+        This is the second paragraph in the list item. You're
+    only required to indent the first line. Lorem ipsum dolor
+    sit amet, consectetuer adipiscing elit.
+
+    *   Another item in the same list.
+
+如果要放程序块的话，该块就需要缩排*两次*，也就是8个空白或是两个tab：
+
+    *   A list item with a code block:
+
+            <code goes here>
+
+当然，项目列表可能会不小心产生，像是下面这样的写法：
+
+    1986\. What a great season.
+
+<h3 id="precode">程序块</h3>
+
+和程序相关的写作或是标签语言原始码通常会有已经排版好的程序块，通过这些块我们并不希望它以一般段落文件的方式去排版，而是按照原来的样式显示，Markdown会用`<pre>`和`<code>`标签来把程序块包起来。
+
+要在Markdown中建立程序块很简单，只要简单地缩排4个空白或是1个tab就可以，例如，下面的输入：
+
+    This is a normal paragraph:
+
+        This is a code block.
+
+Markdown会转换成：
+
+    <p>This is a normal paragraph:</p>
+
+    <pre><code>This is a code block.
+    </code></pre>
+
+这个第行一阶的缩排（4个空白或是1个tab），都会被移除，例如：
+
+    Here is an example of AppleScript:
+
+        tell application "Foo"
+            beep
+        end tell
+
+会被转换为：
+
+    <p>Here is an example of AppleScript:</p>
+
+    <pre><code>tell application "Foo"
+        beep
+    end tell
+    </code></pre>
+
+一个程序块会一直持续到没有缩排的那一行（或是文件结尾）。
+
+在程序块里面，`&`，`<`和`>`会自动转成HTML实体，这样的方式让你非常容易使用Markdown插入范例用的HTML原始码，只需要复制粘贴，再加上缩排就可以了，剩下的Markdown都会帮你处理，例如：
+
+         <div class="footer">
+            &copy; 2004 Foo Corporation
+        </div>
+
+会被转换为：
+
+    <pre><code>&lt;div class="footer"&gt;
+        &amp;copy; 2004 Foo Corporation
+    &lt;/div&gt;
+    </code></pre>
+
+程序块中，一般的Markdown语法不会被转换，像是星号便只是星号，这表示你可以很容易地以Markdown语法撰写Markdown语法相关的文件。
