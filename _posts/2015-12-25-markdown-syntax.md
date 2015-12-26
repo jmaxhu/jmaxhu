@@ -57,15 +57,15 @@ Markdown不是要来取代HTML， 甚至也没有要和它相似，它的语法�
 
 举例来说，在Markdown文件里加上一段HTML表格：
 
-  This is a regular paragraph.
+    This is a regular paragraph.
 
-  <table>
-    <tr>
-      <td>Foo</td>
-    </tr>
-  </table>
+    <table>
+        <tr>
+            <td>Foo</td>
+        </tr>
+    </table>
 
-  This is another regular paragraph.
+    This is another regular paragraph.
 
 请注意，Markdown语法在HTML块标签中将不会被处理。例如，你无法在HTML块中使用Markdown形式的`*强调*`。
 
@@ -77,35 +77,35 @@ HTML区段标签或块标签不同，在区段标签的范围内，Markdown的�
 
 在HTML文件中，有两个字符需要特殊处理：`<`和`&`。`<`符号用于起始标签，`&`符号则用于标记HTML实体，如果你只是想要使用这些符号，你必须要使用实体的形式，像是`&lt;`和`&amp;`。
 
-`&`符号其实很容易让写网络文件的人感到困扰，如果你要打「AT&T」，你必须要写成「AT&amp;T」，还得转换网址内的`&`符号，如果你要链接到：
+`&`符号其实很容易让写网络文件的人感到困扰，如果你要打「AT&T」，你必须要写成`「AT&amp;T」`，还得转换网址内的`&`符号，如果你要链接到：
 
-  http://images.google.com/images?num=30&q=larry+bird
+    http://images.google.com/images?num=30&q=larry+bird
 
 你必须要把网址转成：
 
-  http://images.google.com/iamges?num=30&amp;q=larry+bird
+    http://images.google.com/iamges?num=30&amp;q=larry+bird
 
 才能放到链接标签的`href`属性里。不用说也知道这很容易忘记，这也可能是HTML标准检查所查到错误中，数量最多的。
 
 Markdown允许你直接使用这些符号，但是你要小心转义字符的使用，如果你是在HTML实体中使用`&`符号的话，它不会被转换，而在其它情况下，它则会被转换成`&amp;`。所以你如果要在文件中插入一个著作权的符号，你可以这样写：
 
-  &copy;
+    &copy;
 
 Markdown将不会对这段文字做修改，但是如果你这样写：
 
-  AT&T
+    AT&T
 
 Markdown就会将它转为：
 
-  AT&amp;T
+    AT&amp;T
 
 类似的情况也会发生在`<`符号上，因为Markdown支持[行内HTML](#html)，如果你是使用`<`符号作为HTML标签使用，那Markdown也不会对它做任何转换，但是如果你是写：
 
-  4 < 5
+    4 < 5
 
 Markdown将会把它转换为：
 
-  4 &lt; 5
+    4 &lt; 5
 
 不过需要注意的是，code范围内，不论是行内还是块，`<`和`&`两个符号者*一定*会被转换成HTML实体，这项特性让你可以很容易地用Markdown写HTML code（和HTML相对而言，HTML语法中，你要把所有的`<`和`&`都转换为HTML实体，才能在HTML文件里写出HTML code。）
 
@@ -121,7 +121,7 @@ Markdown将会把它转换为：
 
 如果你*直的*想要插入`<br />`标签的话，在行尾加上两个以上的空白，然后按enter。
 
-是的，这确实需要花比较多的功夫来插入`<br />`，但是「每个换行都转换为`<br />`的方法在Markdown中并不适合，Markdown中email式的「块引用][bq]和多段落的[列表][l]在使用换行来排版的时候，不但更好用，还更好阅读。
+是的，这确实需要花比较多的功夫来插入`<br />`，但是「每个换行都转换为`<br />`的方法在Markdown中并不适合，Markdown中email式的[块引用][bq]和多段落的[列表][l]在使用换行来排版的时候，不但更好用，还更好阅读。
 
   [bq]: #blockquote
   [l]:  #list
@@ -132,68 +132,68 @@ Markdown支持两种标题的语法，[Setext][1]和[atx][2]形式。
 
 Setext形式是用底线的形式，利用`=`（最高阶标题）和`-`（第二阶标题），例如：
 
-  This is an H1
-  =============
+    This is an H1
+    =============
 
-  This is an H3
-  -------------
+    This is an H3
+    -------------
 
 任何数量的`=`和`-`都可以有效果。
 
 Atx形式则在行首插入1到6个`#`，对应到标题1到6阶，使用：
 
-  # This is an H1
+    # This is an H1
 
-  ## This is an H2
+    ## This is an H2
 
-  ###### This is an H6
+    ###### This is an H6
 
 你可以选择性的「关闭」atx样式的标题，这纯粹只是美观用的，若是觉得这样看起来比较舒适，你就可以在行尾加上`#`，而在行尾的`#`数量也不用和开头一样（行首的井字数量决定标题的阶数）：
 
-  # This is an H1 #
+    # This is an H1 #
 
-  ## This is an H2 ##
+    ## This is an H2 ##
 
-  ### This is an H3 ######
+    ### This is an H3 ######
 
 <h3 id="blockquote">块引用</h3>
 
 Markdown使用email形式的块引用，如果你很熟悉如何在email信件中引用，你就知道怎么在Markdown文件中建立一个块引用，那会看起来像是你强迫断行，然后在每行的最前面加上`>`：
 
-  > This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,
-  > consectetuer adipiscing elit. Aliquam hendrerit mi posuere Lectus.
-  > Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.
-  >
-  > Dones sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse
-  > is sem consectetuer libero luctus adipiscing.
+    > this is a blockquote with two paragraphs. lorem ipsum dolor sit amet,
+    > consectetuer adipiscing elit. aliquam hendrerit mi posuere lectus.
+    > vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.
+    >
+    > dones sit amet nisl. aliquam semper ipsum sit amet velit. suspendisse
+    > is sem consectetuer libero luctus adipiscing.
 
 Markdown也允许你只在整个段落的第一行前面加上`>`：
 
-  > This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,
+    > This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,
   consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.
   Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.
 
-  > Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse
+    > Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse
   id sem consectetuer libero luctus adipiscing.
 
 块引用可以有阶层（例如：引用内的引用），只要根据层数加上不同数量的`>`：
 
-  > This is the first level of quoting.
-  >
-  >> This is nested blockquote.
-  >
-  > Back to the first level.
+    > This is the first level of quoting.
+    >
+    >> This is nested blockquote.
+    >
+    > Back to the first level.
 
 引用的块内也可以使用其他的Markdown语法，包括标题、列表、程序块等：
 
-  > ## This is a header.
-  >
-  > 1.  This is the first list item.
-  > 2.  This is the second list item.
-  >
-  > Here's some example code:
-  >
-  >   return shell_exec("echo $input | $markdown_script");
+    > ## This is a header.
+    >
+    > 1.  This is the first list item.
+    > 2.  This is the second list item.
+    >
+    > Here's some example code:
+    >
+    >   return shell_exec("echo $input | $markdown_script");
 
 任何标准的文字编辑器都能简单地建立email格式的引用， 例如BBEdit，你可以选取文字然后选择*增加引用阶层*。
 
@@ -565,15 +565,15 @@ Markdown使用星号(`*`)和底线(`_`)作为标记强调字词的符号，被`*
 
 程序段的起始和结束都可以放入一个空白，起始后面一个，结束前面一个，这样你就可以在段的一开始就插入反引号：
 
-   A single backtick in a code span: `` ` ``
+    A single backtick in a code span: `` ` ``
 
-   A backtick-delimited string in a code span: `` `foo` ``
+    A backtick-delimited string in a code span: `` `foo` ``
 
 会产生：
 
-  <p>A single backtick in a code span: <code>`</code></p>
+    <p>A single backtick in a code span: <code>`</code></p>
 
-  <p>A backtick-delimited string in a code span: <code>`foo`</code></p>
+    <p>A backtick-delimited string in a code span: <code>`foo`</code></p>
 
 在程序段内，`&`和方括号都会被转成HTML实体，这样会比较容易插入HTML原始码，Markdown会把下面这段：
 
