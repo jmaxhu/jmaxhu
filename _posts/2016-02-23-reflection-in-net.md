@@ -1,5 +1,6 @@
 ---
 layout: post
+header-img: img/cosmos_reflection.jpg
 title: .NET反射
 tags: .net, reflection
 ---
