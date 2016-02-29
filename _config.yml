@@ -9,7 +9,7 @@ github_username:  jmaxhu
 
 # Build settings
 markdown: kramdown
-highlighter: pygments
+# highlighter: pygments
 permalink: pretty
 gems: [jekyll-paginate]
 paginate: 6

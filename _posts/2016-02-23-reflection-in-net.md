@@ -41,7 +41,9 @@ MethodInfo|发现方法的特性并提供对方法元数据的访问。
 
 为了方便后续的例子演示, 我使用一个 **Car** 的类, 代码如下:
 
+    {% highlight csharp %}
     //ICar.cs
+
     namespace ReflectionDemo
     {
         public interface ICar
@@ -51,6 +53,7 @@ MethodInfo|发现方法的特性并提供对方法元数据的访问。
     }
 
     //Car.cs
+
     namespace ReflectionDemo
     {
         public class Car : ICar
@@ -83,6 +86,7 @@ MethodInfo|发现方法的特性并提供对方法元数据的访问。
     }
 
     //SportCar.cs
+
     namespace ReflectionDemo
     {
         public class SportCar : Car
@@ -92,6 +96,7 @@ MethodInfo|发现方法的特性并提供对方法元数据的访问。
             }
         }
     }
+    {% endhighlight %}
 
 ## System.Type 类
 
@@ -108,6 +113,7 @@ MethodInfo|发现方法的特性并提供对方法元数据的访问。
 
 这是一个实例方法,任何类型都继续了该方法,因为它定义在Object类中. 这种方法一般在编译时使用, 因为你必须先有一个类型的实例才能调用.例如:
 
+    {% highlight csharp %}
     namespace ReflectionDemo
     {
         internal class Program
@@ -122,6 +128,7 @@ MethodInfo|发现方法的特性并提供对方法元数据的访问。
             }
         }
     }
+    {% endhighlight %}
 
 输出:
 
@@ -139,6 +146,7 @@ Type.GetType() 是一个重载方法,主要包含以下3个参数.
 
 示例如下:
 
+    {% highlight csharp %}
     namespace ReflectionDemo
     {
         internal class Program
@@ -152,6 +160,7 @@ Type.GetType() 是一个重载方法,主要包含以下3个参数.
             }
         }
     }
+    {% endhighlight %}
 
 输出:
 
@@ -161,6 +170,7 @@ Type.GetType() 是一个重载方法,主要包含以下3个参数.
 
 最后一种得到类型信息的方法是使用 C# 的 **typeof** 操作符, 这个操作符需要传递一个类型的名称.
 
+    {% highlight csharp %}
     namespace ReflectionDemo
     {
         internal class Program
@@ -174,6 +184,7 @@ Type.GetType() 是一个重载方法,主要包含以下3个参数.
             }
         }
     }
+    {% endhighlight %}
 
 输出:
 
@@ -215,6 +226,7 @@ PropertyInfo|GetProperty(),GetProperties()|取属性
 
 使用示例:
 
+    {% highlight csharp %}
 	using System;
 	using System.Text;
 	using System.Reflection;
@@ -270,6 +282,7 @@ PropertyInfo|GetProperty(),GetProperties()|取属性
 		  }
 		}
 	}
+    {% endhighlight %}
 
 输出:
 	
@@ -314,7 +327,7 @@ GetExecutingAssembly()|得到当前运行的程序集信息.该方法没有重�
 GetTypes()|得到程序集中所有的类型
 GetCustomAttributes()|这个静态可重载方法得到程序集中的所有自定义属性
 
-
+    {% highlight csharp %}
     using System;
     using System.Reflection;
 
@@ -354,6 +367,7 @@ GetCustomAttributes()|这个静态可重载方法得到程序集中的所有自�
         }
       }
     }
+    {% endhighlight %}
 
 该示例输入mscorlib程序集中所有的类型及自定义属性类.
 
@@ -362,6 +376,7 @@ GetCustomAttributes()|这个静态可重载方法得到程序集中的所有自�
 
 示例:
 
+    {% highlight csharp %}
     using System;
     using System.Reflection;
 
@@ -410,6 +425,7 @@ GetCustomAttributes()|这个静态可重载方法得到程序集中的所有自�
         }
       }
     }
+    {% endhighlight %}
 
 输出:
 
