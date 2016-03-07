@@ -22,14 +22,14 @@ tags: laravel
     vagrant box add laravel/homestead
     {% endhighlight %}
 
-不过这种方式在国内实在是太慢了，一个镜像有1G左右。办法是先把镜像文件通过其它方式下载到本地，然后再安装，下载前先访问[这里](https://atlas.hashicorp.com/laravel/boxes/homestead) 找到最新版本，比如现在的最新版本是0.4.1，所以下载virtualbox的文件地址就是： https://atlas.hashicorp.com/laravel/boxes/homestead/versions/0.4.1/providers/virtualbox.box 。当然如果是0.4.1版本的话，上面分享的百度云盘中已包含，从云盘中下载最快。
+不过这种方式在国内实在是太慢了，一个镜像有1G左右。办法是先把镜像文件通过其它方式下载到本地，然后再安装，下载前先访问[这里](https://atlas.hashicorp.com/laravel/boxes/homestead) 找到最新版本，比如现在的最新版本是0.4.2，所以下载virtualbox的文件地址就是： https://atlas.hashicorp.com/laravel/boxes/homestead/versions/0.4.2/providers/virtualbox.box 。当然如果是0.4.2版本的话，上面分享的百度云盘中已包含，从云盘中下载最快。
 通过本地方案时，还需要提供一个配置文件，用来说明安装类型，版本等。云盘中的metadata.json就是这个的文件，内容如下：
 
     {% highlight javascript %}
     {
       "name": "laravel/homestead",
       "versions": [{
-          "version": "0.4.1",
+          "version": "0.4.2",
           "providers": [{
             "name": "virtualbox",
             "url": "file://virtualbox.box"
@@ -45,7 +45,7 @@ tags: laravel
 是否正确安装可以通过如下命令验证：
 
     $ vagrant box list
-    laravel/homestead     (virtualbox 0.4.1)
+    laravel/homestead     (virtualbox 0.4.2)
 
 如果正确列出了 homestead及版本，说明安装成功了。
 
