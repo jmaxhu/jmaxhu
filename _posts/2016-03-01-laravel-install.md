@@ -10,7 +10,7 @@ tags: laravel
 
 # 安装
 基于PHP的项目一般推荐用 [LAMP](https://zh.wikipedia.org/wiki/LAMP) 环境，可以在Linux下配置Apache（Nginx），Mysql，PHP还是比较麻烦的，所有Laravel提供了一个虚拟机镜像来帮助我们省去安装和配置环境的烦恼。Laravel提供了一个基于 [Vagrant][vagrant] 的镜像，支持 [VirtualBox](https://www.virtualbox.org/wiki/Downloads) 和 [VMWare](http://www.vmware.com/) 两种虚拟机软件。 Laravel提供的这个镜像叫 [Laravel Homestead](https://laravel.com/docs/5.2/homestead)。当然Laravel也支持手工安装，不过那样比较麻烦，现在以 Homestead 方式安装Laravel。
-本文涉及的一些软件，可以从 [百度云盘](http://pan.baidu.com/s/1dE0vBKt) 中下载，这里放的是现在（2016-03-01）最新的软件。
+本文涉及的一些软件，可以从 [百度云盘](http://pan.baidu.com/s/1dE0vBKt) 中下载，这里放的是现在（2017-02-20）最新的软件。
 
 ## Vagrant
 安装 Laravel Homestead 的第一步是安装 [Vargant][vagrant]，根据不同的操作系统安装不同版本。安装很简单，下载安装文件直接安装即可。
@@ -22,14 +22,14 @@ tags: laravel
     vagrant box add laravel/homestead
     {% endhighlight %}
 
-不过这种方式在国内实在是太慢了，一个镜像有1G左右。办法是先把镜像文件通过其它方式下载到本地，然后再安装，下载前先访问[这里](https://atlas.hashicorp.com/laravel/boxes/homestead) 找到最新版本，比如现在的最新版本是0.4.2，所以下载virtualbox的文件地址就是： https://atlas.hashicorp.com/laravel/boxes/homestead/versions/0.4.2/providers/virtualbox.box 。当然如果是0.4.2版本的话，上面分享的百度云盘中已包含，从云盘中下载最快。
+不过这种方式在国内实在是太慢了，一个镜像有1G左右。办法是先把镜像文件通过其它方式下载到本地，然后再安装，下载前先访问[这里](https://atlas.hashicorp.com/laravel/boxes/homestead) 找到最新版本，比如现在的最新版本是1.1.0，所以下载virtualbox的文件地址就是： https://atlas.hashicorp.com/laravel/boxes/homestead/versions/1.1.0/providers/virtualbox.box 。当然如果是1.1.0版本的话，上面分享的百度云盘中已包含，从云盘中下载最快。
 通过本地方案时，还需要提供一个配置文件，用来说明安装类型，版本等。云盘中的metadata.json就是这个的文件，内容如下：
 
     {% highlight javascript %}
     {
       "name": "laravel/homestead",
       "versions": [{
-          "version": "0.4.2",
+          "version": "1.1.0",
           "providers": [{
             "name": "virtualbox",
             "url": "file://virtualbox.box"
@@ -45,7 +45,7 @@ tags: laravel
 是否正确安装可以通过如下命令验证：
 
     $ vagrant box list
-    laravel/homestead     (virtualbox 0.4.2)
+    laravel/homestead     (virtualbox 1.1.0)
 
 如果正确列出了 homestead及版本，说明安装成功了。
 
@@ -99,7 +99,7 @@ Homestead允许通过配置的方式，自动创建nginx站点，格式如下：
 
 windows的hosts文件目录为： C:\Windows\System32\drivers\etc\hosts,  linux的hosts文件目录为： /etc/hosts
 
-192.168.10.10 是虚拟机使用的IP，不影响宿主环境，建议不要修改。 这样就可以通过  http://homestead.app 访问站点了。 
+192.168.10.10 是虚拟机使用的IP，不影响宿主环境，建议不要修改。 这样就可以通过  http://homestead.app 访问站点了。
 
 ## 启动Vagrant box
 在homestead目录中，运行以下命令来启动虚拟机：
